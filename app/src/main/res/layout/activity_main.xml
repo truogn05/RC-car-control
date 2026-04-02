@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:rotationX="0"
+    tools:context=".MainActivity">
+
+    <!-- TOP LEFT: Status & Power -->
+    <LinearLayout
+        android:id="@+id/llTopLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/editbox_background"
+            android:padding="8dp"
+            android:text="Connected/not"
+            android:textColor="#388E3C"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvPower"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="@android:drawable/editbox_background"
+            android:padding="8dp"
+            android:text="Power: 100%"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvDebug"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="L: 0 | R: 0"
+            android:textColor="#000000"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- TOP CENTER: Speed Indicator (for D-Pad Mode) -->
+    <LinearLayout
+        android:id="@+id/llTopCenter"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/llTopRight"
+        app:layout_constraintStart_toEndOf="@+id/llTopLeft"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvSpeedTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Speed"
+            android:textStyle="bold" />
+
+        <ProgressBar
+            android:id="@+id/pbSpeedIndicator"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:progressDrawable="@drawable/speed_progress_bar"
+            android:max="100"
+            android:progress="0" />
+    </LinearLayout>
+
+    <!-- TOP RIGHT: Settings, Buzzer, Auto -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/llTopRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/btnAuto"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="#155B7A"
+            android:text="Auto"
+            android:textSize="12sp"
+            app:cornerRadius="35dp"
+            app:layout_constraintBottom_toBottomOf="@+id/btnSettings"
+            app:layout_constraintEnd_toStartOf="@+id/btnSettings"
+            app:layout_constraintTop_toTopOf="@+id/btnSettings" />
+
+        <Button
+            android:id="@+id/btnSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="62dp"
+            android:backgroundTint="#155B7A"
+            android:text="Settings"
+            android:textSize="12sp"
+            app:cornerRadius="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnBuzzer"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="#155B7A"
+            android:text="Buzzer"
+            android:textSize="12sp"
+            app:cornerRadius="35dp"
+            app:layout_constraintEnd_toEndOf="@+id/btnSettings"
+            app:layout_constraintStart_toStartOf="@+id/btnSettings"
+            app:layout_constraintTop_toBottomOf="@+id/btnSettings" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- BOTTOM LEFT: Directional Controls (D-Pad or Joystick) & Speed Limit -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clBottomLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <FrameLayout
+            android:id="@+id/flControls"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <!-- D-Pad Mode -->
+            <LinearLayout
+                android:id="@+id/layoutDpad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btnLeft"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_triangle_left" />
+
+                <ImageButton
+                    android:id="@+id/btnRight"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_triangle_right" />
+            </LinearLayout>
+
+            <!-- Joystick Mode (Hidden by default) -->
+            <io.github.controlwear.virtual.joystick.android.JoystickView
+                android:id="@+id/joystickView"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                app:JV_backgroundColor="#D3D3D3"
+                app:JV_borderColor="#155B7A"
+                app:JV_borderWidth="4dp"
+                app:JV_buttonColor="#FF0000" />
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- BOTTOM RIGHT: Throttle (Gas, Brake, Gear) -->
+    <LinearLayout
+        android:id="@+id/layoutThrottle"
+        android:layout_width="282dp"
+        android:layout_height="166dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+            android:id="@+id/btnBrake"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:backgroundTint="#155B7A"
+            android:rotationX="-15"
+            android:text="Phanh"
+            app:cornerRadius="12dp" />
+
+        <Button
+            android:id="@+id/btnGas"
+            android:layout_width="80dp"
+            android:layout_height="140dp"
+            android:layout_marginStart="16dp"
+            android:backgroundTint="#155B7A"
+            android:rotationX="-15"
+            android:text="Ga"
+            app:cornerRadius="12dp" />
+
+        <!-- Gear Shifter -->
+        <RadioGroup
+            android:id="@+id/rgGear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <RadioButton
+                android:id="@+id/rbDrive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="D"
+                android:textColor="#EEDB00"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/rbNeutral"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="N"
+                android:textColor="#00B050"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/rbReverse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="R"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- Tách hẳn thanh Speed Limit ra thành một khối ở góc dưới cùng bên phải (cho chế độ Joystick) -->
+    <LinearLayout
+        android:id="@+id/llSpeedLimitJoystick"
+        android:layout_width="60dp"
+        android:layout_height="160dp"
+        android:gravity="center"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone">
+
+        <SeekBar
+            android:id="@+id/sbSpeedLimit"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="100"
+            android:rotation="270" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
