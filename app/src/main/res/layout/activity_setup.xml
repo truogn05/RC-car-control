@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center_vertical"
+    android:background="#2E3440">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cài Đặt RC Car"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="#ECEFF4"
+        android:layout_marginBottom="24dp"
+        android:gravity="center" />
+
+    <!-- Smart Config Section -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1. Cấu hình Wi-Fi cho Xe (ESP-Touch)"
+        android:textColor="#88C0D0"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/etSsid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tên Wi-Fi (SSID)"
+        android:textColor="#ECEFF4"
+        android:textColorHint="#4C566A"
+        android:backgroundTint="#88C0D0"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Mật khẩu Wi-Fi"
+        android:inputType="textPassword"
+        android:textColor="#ECEFF4"
+        android:textColorHint="#4C566A"
+        android:backgroundTint="#88C0D0"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/btnSmartConfig"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Gửi cấu hình Wi-Fi xuống xe"
+        android:backgroundTint="#A3BE8C"
+        android:textColor="#2E3440"
+        android:layout_marginBottom="24dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#4C566A"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- MQTT Section -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2. Cấu hình Kết Nối MQTT"
+        android:textColor="#EBCB8B"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/etBroker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="MQTT Broker (vd: tcp://broker.hivemq.com:1883)"
+        android:textColor="#ECEFF4"
+        android:textColorHint="#4C566A"
+        android:backgroundTint="#EBCB8B"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/etTopic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="MQTT Topic"
+        android:textColor="#ECEFF4"
+        android:textColorHint="#4C566A"
+        android:backgroundTint="#EBCB8B"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- Start Button -->
+    <Button
+        android:id="@+id/btnStart"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="BẮT ĐẦU VÀO ĐIỀU KHIỂN"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:backgroundTint="#5E81AC"
+        android:textColor="#ECEFF4"
+        android:layout_marginTop="8dp"/>
+
+</LinearLayout>

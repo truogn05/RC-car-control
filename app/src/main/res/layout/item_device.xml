@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/bg_device_card"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
+    android:layout_marginBottom="12dp"
+    android:padding="16dp"
+    android:gravity="center_vertical">
+
+    <!-- Device icon -->
+    <TextView
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:gravity="center"
+        android:text="🚗"
+        android:textSize="26sp"
+        android:background="@drawable/bg_icon_circle" />
+
+    <!-- Device info -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvDeviceName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="RC Car 1"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/rc_text_primary" />
+
+            <TextView
+                android:id="@+id/tvDeviceType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MQTT"
+                android:textSize="11sp"
+                android:textColor="@color/rc_accent_cyan"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:background="@drawable/bg_badge_mqtt" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvDeviceSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="broker.hivemq.com:1883"
+            android:textSize="12sp"
+            android:textColor="@color/rc_text_secondary"
+            android:layout_marginTop="4dp"
+            android:maxLines="1"
+            android:ellipsize="end" />
+    </LinearLayout>
+
+    <!-- "..." button -->
+    <ImageButton
+        android:id="@+id/btnDeviceMore"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_more_vert"
+        android:contentDescription="More options" />
+
+</LinearLayout>

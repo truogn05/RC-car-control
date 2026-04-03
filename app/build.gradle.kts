@@ -44,6 +44,12 @@ dependencies {
     implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5")
     implementation(libs.androidx.constraintlayout)
 
+    // Thư viện cấu hình Wi-Fi SmartConfig (ESP-Touch)
+    implementation("com.github.EspressifApp:lib-esptouch-android:1.1.1")
+
+    // Gson (lưu danh sách xe)
+    implementation("com.google.code.gson:gson:2.10.1")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

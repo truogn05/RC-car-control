@@ -4,16 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:rotationX="0"
-    tools:context=".MainActivity">
+    android:background="@color/rc_bg_deep"
+    android:clipChildren="false"
+    android:clipToPadding="false">
 
-    <!-- TOP LEFT: Status & Power -->
+    <!-- Camera background (hidden by default) -->
+    <ImageView
+        android:id="@+id/ivCameraFeed"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Semi-transparent overlay for readability when camera is on -->
+    <View
+        android:id="@+id/vCameraOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- ==== TOP-LEFT STATUS PANEL ==== -->
     <LinearLayout
-        android:id="@+id/llTopLeft"
+        android:id="@+id/llStatusPanel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="@drawable/bg_glass_panel"
+        android:padding="10dp"
+        android:layout_margin="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -21,206 +44,225 @@
             android:id="@+id/tvStatus"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:background="@android:drawable/editbox_background"
-            android:padding="8dp"
-            android:text="Connected/not"
-            android:textColor="#388E3C"
-            android:textSize="14sp"
+            android:text="● Đang kết nối..."
+            android:textColor="@color/rc_warning"
+            android:textSize="12sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvPower"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="@android:drawable/editbox_background"
-            android:padding="8dp"
-            android:text="Power: 100%"
-            android:textColor="#000000"
-            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tvDebug"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:text="L: 0 | R: 0"
-            android:textColor="#000000"
-            android:textSize="12sp" />
+            android:textColor="@color/rc_text_secondary"
+            android:textSize="11sp"
+            android:layout_marginTop="2dp"/>
     </LinearLayout>
 
-    <!-- TOP CENTER: Speed Indicator (for D-Pad Mode) -->
+    <!-- ==== TOP CENTER: Speed Gauge ==== -->
     <LinearLayout
         android:id="@+id/llTopCenter"
-        android:layout_width="250dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintEnd_toStartOf="@+id/llTopRight"
-        app:layout_constraintStart_toEndOf="@+id/llTopLeft"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@id/llStatusPanel"
+        app:layout_constraintEnd_toStartOf="@id/llTopRight"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/tvSpeedTitle"
-            android:layout_width="match_parent"
+            android:id="@+id/tvPower"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Speed"
-            android:textStyle="bold" />
+            android:text="0%"
+            android:textColor="@color/rc_text_secondary"
+            android:textSize="14sp" />
 
         <ProgressBar
             android:id="@+id/pbSpeedIndicator"
             style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:progressDrawable="@drawable/speed_progress_bar"
+            android:layout_width="250dp"
+            android:layout_height="30dp"
             android:max="100"
-            android:progress="0" />
+            android:progress="0"
+            android:progressDrawable="@drawable/speed_progress_bar" />
     </LinearLayout>
 
-    <!-- TOP RIGHT: Settings, Buzzer, Auto -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <!-- ==== TOP RIGHT: Control Buttons ==== -->
+    <LinearLayout
         android:id="@+id/llTopRight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_glass_panel"
+        android:padding="8dp"
+        android:layout_margin="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCamera"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="📷"
+            android:textSize="18sp"
+            android:padding="0dp"
+            app:backgroundTint="@color/rc_bg_card_elevated"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="@color/rc_divider"
+            android:layout_marginEnd="4dp" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAuto"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginEnd="8dp"
-            android:backgroundTint="#155B7A"
-            android:text="Auto"
-            android:textSize="12sp"
-            app:cornerRadius="35dp"
-            app:layout_constraintBottom_toBottomOf="@+id/btnSettings"
-            app:layout_constraintEnd_toStartOf="@+id/btnSettings"
-            app:layout_constraintTop_toTopOf="@+id/btnSettings" />
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="🤖"
+            android:textSize="18sp"
+            android:padding="0dp"
+            app:backgroundTint="@color/rc_bg_card_elevated"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="@color/rc_divider"
+            android:layout_marginEnd="4dp" />
 
-        <Button
-            android:id="@+id/btnSettings"
-            android:layout_width="wrap_content"
-            android:layout_height="62dp"
-            android:backgroundTint="#155B7A"
-            android:text="Settings"
-            android:textSize="12sp"
-            app:cornerRadius="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnBuzzer"
-            android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            android:layout_marginTop="8dp"
-            android:backgroundTint="#155B7A"
-            android:text="Buzzer"
-            android:textSize="12sp"
-            app:cornerRadius="35dp"
-            app:layout_constraintEnd_toEndOf="@+id/btnSettings"
-            app:layout_constraintStart_toStartOf="@+id/btnSettings"
-            app:layout_constraintTop_toBottomOf="@+id/btnSettings" />
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="📢"
+            android:textSize="18sp"
+            android:padding="0dp"
+            app:backgroundTint="@color/rc_bg_card_elevated"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="@color/rc_divider"
+            android:layout_marginEnd="4dp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSettings"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="⚙️"
+            android:textSize="18sp"
+            android:padding="0dp"
+            app:backgroundTint="@color/rc_bg_card_elevated"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="@color/rc_divider" />
+    </LinearLayout>
 
-    <!-- BOTTOM LEFT: Directional Controls (D-Pad or Joystick) & Speed Limit -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clBottomLeft"
+    <!-- ==== BOTTOM LEFT: Steering Touch Area ==== -->
+    <FrameLayout
+        android:id="@+id/flSteeringArea"
+        android:layout_width="0dp"
+        android:layout_height="180dp"
+        android:layout_margin="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/llGuideline"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- D-Pad visible arrows (for reference/feedback) -->
+        <LinearLayout
+            android:id="@+id/layoutDpad"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnLeft"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/bg_dir_button"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_triangle_left"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"/>
+
+            <ImageButton
+                android:id="@+id/btnRight"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/bg_dir_button"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_triangle_right" />
+        </LinearLayout>
+
+        <!-- Joystick Mode (Hidden by default) -->
+        <io.github.controlwear.virtual.joystick.android.JoystickView
+            android:id="@+id/joystickView"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_gravity="start"
+            android:layout_marginStart="40dp"
+            android:visibility="gone"
+            app:JV_backgroundColor="#1A88C0D0"
+            app:JV_borderColor="@color/rc_accent_cyan"
+            app:JV_borderWidth="3dp"
+            app:JV_buttonColor="@color/rc_accent_cyan" />
+
+        <!-- Transparent swipe capture overlay (always on top for button mode) -->
+    </FrameLayout>
+
+    <!-- Center guideline -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/llGuideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
-        <FrameLayout
-            android:id="@+id/flControls"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <!-- D-Pad Mode -->
-            <LinearLayout
-                android:id="@+id/layoutDpad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/btnLeft"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@android:color/transparent"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_triangle_left" />
-
-                <ImageButton
-                    android:id="@+id/btnRight"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginStart="8dp"
-                    android:background="@android:color/transparent"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_triangle_right" />
-            </LinearLayout>
-
-            <!-- Joystick Mode (Hidden by default) -->
-            <io.github.controlwear.virtual.joystick.android.JoystickView
-                android:id="@+id/joystickView"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                app:JV_backgroundColor="#D3D3D3"
-                app:JV_borderColor="#155B7A"
-                app:JV_borderWidth="4dp"
-                app:JV_buttonColor="#FF0000" />
-        </FrameLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- BOTTOM RIGHT: Throttle (Gas, Brake, Gear) -->
+    <!-- ==== BOTTOM RIGHT: Throttle Controls ==== -->
     <LinearLayout
         android:id="@+id/layoutThrottle"
-        android:layout_width="282dp"
-        android:layout_height="166dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:gravity="bottom"
+        android:layout_width="0dp"
+        android:layout_height="180dp"
+        android:layout_margin="12dp"
+        android:gravity="right"
         android:orientation="horizontal"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <Button
-            android:id="@+id/btnBrake"
-            android:layout_width="100dp"
-            android:layout_height="80dp"
-            android:backgroundTint="#155B7A"
-            android:rotationX="-15"
-            android:text="Phanh"
-            app:cornerRadius="12dp" />
-
-        <Button
-            android:id="@+id/btnGas"
-            android:layout_width="80dp"
-            android:layout_height="140dp"
-            android:layout_marginStart="16dp"
-            android:backgroundTint="#155B7A"
-            android:rotationX="-15"
-            android:text="Ga"
-            app:cornerRadius="12dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/llGuideline">
 
         <!-- Gear Shifter -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="20dp"
+            android:gravity="bottom"
+            android:clipChildren="false"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBrake"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_marginEnd="12dp"
+                android:text="PHANH"
+                android:rotationX="-15"
+                android:textColor="@color/rc_text_primary"
+                android:textSize="12sp"
+                app:backgroundTint="@color/rc_danger"
+                app:cornerRadius="16dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnGas"
+                android:layout_width="100dp"
+                android:layout_height="150dp"
+                android:text="GA"
+                android:rotationX="-15"
+                android:textColor="@color/rc_bg_deep"
+                android:textSize="14sp"
+                app:backgroundTint="@color/rc_accent_cyan"
+                app:cornerRadius="16dp" />
+        </LinearLayout>
+
         <RadioGroup
             android:id="@+id/rgGear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_glass_panel"
             android:orientation="vertical"
             android:padding="8dp">
 
@@ -228,55 +270,57 @@
                 android:id="@+id/rbDrive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/rc_accent_cyan"
                 android:text="D"
-                android:textColor="#EEDB00"
-                android:textSize="20sp"
+                android:textColor="@color/rc_accent_cyan"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <RadioButton
                 android:id="@+id/rbNeutral"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/rc_success"
                 android:checked="true"
                 android:text="N"
-                android:textColor="#00B050"
-                android:textSize="20sp"
+                android:textColor="@color/rc_success"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <RadioButton
                 android:id="@+id/rbReverse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/rc_danger"
                 android:text="R"
-                android:textColor="#000000"
-                android:textSize="20sp"
+                android:textColor="@color/rc_danger"
+                android:textSize="22sp"
                 android:textStyle="bold" />
         </RadioGroup>
+
+        <!-- Gas + Brake -->
     </LinearLayout>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <!-- Tách hẳn thanh Speed Limit ra thành một khối ở góc dưới cùng bên phải (cho chế độ Joystick) -->
+    <!-- Speed limit slider (Joystick mode only - right side) -->
     <LinearLayout
         android:id="@+id/llSpeedLimitJoystick"
-        android:layout_width="60dp"
-        android:layout_height="160dp"
+        android:layout_width="48dp"
+        android:layout_height="170dp"
         android:gravity="center"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="12dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <SeekBar
             android:id="@+id/sbSpeedLimit"
             android:layout_width="160dp"
-            android:layout_height="wrap_content"
+            android:layout_height="32dp"
             android:max="100"
             android:progress="100"
-            android:rotation="270" />
+            android:rotation="270"
+            android:splitTrack="false"
+            android:progressDrawable="@drawable/bg_speed_limit_seekbar"
+            android:thumbTint="@color/rc_text_primary" />
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,8 +2,7 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 
-const char* ssid = "YOUR_WIFI_SSID";
-const char* password = "YOUR_WIFI_PASSWORD";
+
 const char* mqtt_server = "broker.hivemq.com";
 const char* mqtt_topic = "my_rc_car/control";
 
@@ -119,12 +118,33 @@ void setup() {
   driveMotor(0, 0);
 
   // Setup WiFi
-  WiFi.begin(ssid, password);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(); // Thử kết nối với credentials cũ đã lưu
   Serial.print("\nConnecting to WiFi");
-  while (WiFi.status() != WL_CONNECTED) {
+  
+  int attempts = 0;
+  while (WiFi.status() != WL_CONNECTED && attempts < 20) { // Đợi 10 giây
     delay(500); 
     Serial.print(".");
+    attempts++;
   }
+
+  if (WiFi.status() != WL_CONNECTED) {
+    Serial.println("\nWiFi connection failed. Starting SmartConfig...");
+    WiFi.beginSmartConfig();
+    while (!WiFi.smartConfigDone()) {
+      delay(500);
+      Serial.print("#");
+    }
+    Serial.println("\nSmartConfig Configuration received!");
+    
+    // Đợi kết nối
+    while (WiFi.status() != WL_CONNECTED) {
+      delay(500);
+      Serial.print(".");
+    }
+  }
+
   Serial.printf("\nWiFi Connected! IP: %s\n", WiFi.localIP().toString().c_str());
 
   mqttClient.setServer(mqtt_server, 1883);

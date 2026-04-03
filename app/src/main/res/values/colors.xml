@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- RC Car Dark Theme Palette -->
+    <color name="rc_bg_deep">#080D1A</color>
+    <color name="rc_bg_surface">#101829</color>
+    <color name="rc_bg_card">#182035</color>
+    <color name="rc_bg_card_elevated">#1E2A44</color>
+
+    <color name="rc_accent_cyan">#00C8FF</color>
+    <color name="rc_accent_cyan_dim">#2299BB</color>
+    <color name="rc_accent_blue">#3A7FFF</color>
+    <color name="rc_accent_blue_dim">#1A4FAA</color>
+
+    <color name="rc_success">#4CAF50</color>
+    <color name="rc_warning">#FFC107</color>
+    <color name="rc_danger">#FF5252</color>
+    <color name="rc_buzzer">#FF9800</color>
+    <color name="rc_auto">#9C27B0</color>
+
+    <color name="rc_text_primary">#ECEFF4</color>
+    <color name="rc_text_secondary">#8899BB</color>
+    <color name="rc_text_hint">#445577</color>
+    <color name="rc_divider">#1E3055</color>
+
+    <!-- Legacy colors -->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
