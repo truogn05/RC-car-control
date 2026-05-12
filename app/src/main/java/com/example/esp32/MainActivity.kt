@@ -419,16 +419,20 @@ class MainActivity : AppCompatActivity() {
         val outL = left.roundToInt()
         val outR = right.roundToInt()
 
+        val spdL = 70 + (255-70)*outL/100
+        val spdR = 70 + (255-70)*outR/100
+
         if (outL != lastPublishedLeft || outR != lastPublishedRight) {
             lastPublishedLeft = outL
             lastPublishedRight = outR
             tvDebug.text = "L: $outL | R: $outR"
             // Route to the appropriate transport
+
             if (connectionType == "wifi") {
-                val payload = "$outL,$outR"
+                val payload = "$spdL,$spdR"
                 udpExecutor.execute { udpHandler.publish(payload) }
             } else {
-                mqttHandler.publish(mqttTopic, "$outL,$outR")
+                mqttHandler.publish(mqttTopic, "$spdL,$spdR")
             }
         }
     }
