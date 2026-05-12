@@ -82,11 +82,11 @@ class DeviceListActivity : AppCompatActivity() {
 
     private fun openController(device: Device) {
         val intent = Intent(this, MainActivity::class.java).apply {
-            putExtra("device_id", device.id)
-            putExtra("device_name", device.name)
+            putExtra("connection_type", device.connectionType)
             putExtra("broker_uri", device.brokerUri)
             putExtra("mqtt_topic", device.mqttTopic)
             putExtra("camera_url", device.cameraUrl)
+            putExtra("ap_ssid", device.apSsid)
         }
         startActivity(intent)
     }

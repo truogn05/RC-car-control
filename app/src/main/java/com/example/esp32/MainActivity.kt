@@ -18,12 +18,20 @@ import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.roundToInt
 import kotlin.math.sin
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
 
+    // Transport layer – only one is active depending on connectionType
     private lateinit var mqttHandler: MqttHandler
+    private lateinit var udpHandler: UdpHandler
+
+    // Background executor for UDP sends (must not run on main thread)
+    private lateinit var udpExecutor: ExecutorService
 
     // Device info from Intent
+    private var connectionType = "mqtt"   // "mqtt" | "wifi"
     private var brokerUri = "tcp://broker.hivemq.com:1883"
     private var mqttTopic = "my_rc_car/control"
     private var cameraUrl = ""
@@ -79,9 +87,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Read device info from intent
+        connectionType = intent.getStringExtra("connection_type") ?: "mqtt"
         brokerUri = intent.getStringExtra("broker_uri") ?: "tcp://broker.hivemq.com:1883"
         mqttTopic = intent.getStringExtra("mqtt_topic") ?: "my_rc_car/control"
         cameraUrl = intent.getStringExtra("camera_url") ?: ""
+        val apSsid = intent.getStringExtra("ap_ssid") ?: "RCCar_AP"
 
         // Read settings
         val prefs = getSharedPreferences("RcCarPrefs", Context.MODE_PRIVATE)
@@ -92,7 +102,7 @@ class MainActivity : AppCompatActivity() {
         setupSoundPool()
         setupTouchListeners()
         applyUIFromSettings()
-        connectMqtt()
+        setupTransport(apSsid)
 
         handler.post(gameLoop)
     }
@@ -277,6 +287,36 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Initialize the appropriate transport depending on [connectionType].
+     * - "wifi"  → UDP direct to ESP32 AP at 192.168.4.1:4210
+     * - "mqtt"  → MQTT via broker
+     */
+    private fun setupTransport(apSsid: String) {
+        if (connectionType == "wifi") {
+            setupWifiTransport(apSsid)
+        } else {
+            connectMqtt()
+        }
+    }
+
+    private fun setupWifiTransport(apSsid: String) {
+        udpExecutor = Executors.newSingleThreadExecutor()
+        udpHandler = UdpHandler()  // default: 192.168.4.1:4210
+
+        tvStatus.text = "● WiFi Direct"
+        tvStatus.setTextColor(Color.parseColor("#4CAF50"))
+
+        // Remind user to connect to the AP manually
+        runOnUiThread {
+            Toast.makeText(
+                this,
+                "Hãy đảm bảo điện thoại đang kết nối WiFi: $apSsid",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
     private fun connectMqtt() {
         val clientId = "AndroidRC_${System.currentTimeMillis()}"
         mqttHandler = MqttHandler(brokerUri, clientId)
@@ -286,7 +326,7 @@ class MainActivity : AppCompatActivity() {
         mqttHandler.connect(
             onSuccess = {
                 runOnUiThread {
-                    tvStatus.text = "● Đã kết nối"
+                    tvStatus.text = "● Đã kết nối MQTT"
                     tvStatus.setTextColor(Color.parseColor("#4CAF50"))
                 }
                 mqttHandler.subscribe("$mqttTopic/battery") { batteryPct ->
@@ -296,9 +336,9 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             },
-            onFailure = { error ->
+            onFailure = { _ ->
                 runOnUiThread {
-                    tvStatus.text = "● Lỗi kết nối"
+                    tvStatus.text = "● Lỗi kết nối MQTT"
                     tvStatus.setTextColor(Color.parseColor("#FF5252"))
                 }
             }
@@ -383,7 +423,13 @@ class MainActivity : AppCompatActivity() {
             lastPublishedLeft = outL
             lastPublishedRight = outR
             tvDebug.text = "L: $outL | R: $outR"
-            mqttHandler.publish(mqttTopic, "$outL,$outR")
+            // Route to the appropriate transport
+            if (connectionType == "wifi") {
+                val payload = "$outL,$outR"
+                udpExecutor.execute { udpHandler.publish(payload) }
+            } else {
+                mqttHandler.publish(mqttTopic, "$outL,$outR")
+            }
         }
     }
 
@@ -391,5 +437,6 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         handler.removeCallbacks(gameLoop)
         soundPool?.release()
+        if (::udpExecutor.isInitialized) udpExecutor.shutdown()
     }
 }

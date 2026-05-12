@@ -7,6 +7,7 @@ espressoCore = "3.7.0"
 appcompat = "1.6.1"
 material = "1.10.0"
 constraintlayout = "2.2.1"
+esptouch = "2.3.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -16,6 +17,7 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+esptouch = { group = "com.github.EspressifApp", name = "EsptouchForAndroid", version.ref = "esptouch" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -33,7 +33,7 @@ class DeviceAdapter(
         val device = devices[position]
         holder.tvName.text = device.name
         holder.tvSubtitle.text = when (device.connectionType) {
-            "wifi" -> "WiFi: ${device.ssid} · ${device.brokerUri}"
+            "wifi" -> "WiFi: ${device.apSsid}"
             else -> device.brokerUri
         }
         holder.tvType.text = if (device.connectionType == "wifi") "WiFi" else "MQTT"
