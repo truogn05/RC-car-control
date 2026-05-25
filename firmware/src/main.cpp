@@ -45,11 +45,12 @@
 // =============================================================
 
 // --- L298N Motor Driver ---
-#define PIN_IN1   25   // Left motor  - forward
+#define PIN_IN1   27   // Left motor  - forward
 #define PIN_IN2   26   // Left motor  - backward
-#define PIN_ENA   27   // Left motor  - PWM enable
-#define PIN_IN3   14   // Right motor - forward
-#define PIN_IN4   19   // Right motor - backward  ⚠ GPIO19 (GPIO12 is strapping pin, avoid)
+#define PIN_ENA   14   // Left motor  - PWM enable
+
+#define PIN_IN3   25   // Right motor - forward
+#define PIN_IN4   33   // Right motor - backward  
 #define PIN_ENB   13   // Right motor - PWM enable
 
 // --- Peripherals ---

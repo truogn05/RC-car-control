@@ -419,13 +419,13 @@ class MainActivity : AppCompatActivity() {
         val outL = left.roundToInt()
         val outR = right.roundToInt()
 
-        val spdL = 70 + (255-70)*outL/100
-        val spdR = 70 + (255-70)*outR/100
+        val spdL = mapSpeed(outL)
+        val spdR = mapSpeed(outR)
 
         if (outL != lastPublishedLeft || outR != lastPublishedRight) {
             lastPublishedLeft = outL
             lastPublishedRight = outR
-            tvDebug.text = "L: $outL | R: $outR"
+            tvDebug.text = "L: $spdL | R: $spdR"
             // Route to the appropriate transport
 
             if (connectionType == "wifi") {
@@ -436,7 +436,18 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+    private fun mapSpeed(percent: Int): Int {
+        val absVal = kotlin.math.abs(percent)
 
+        val pwm = when {
+            absVal == 0 -> 0
+            absVal <= 30 -> 100
+            absVal <= 65 -> 150
+            else -> 200
+        }
+
+        return pwm * (if (percent >= 0) 1 else -1)
+    }
     override fun onDestroy() {
         super.onDestroy()
         handler.removeCallbacks(gameLoop)
