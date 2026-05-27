@@ -69,4 +69,14 @@ class MqttHandler(private val brokerUrl: String, private val clientId: String) {
             e.printStackTrace()
         }
     }
+
+    fun disconnect() {
+        try {
+            if (mqttClient?.isConnected == true) {
+                mqttClient?.disconnect()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 }

@@ -60,20 +60,6 @@
                 android:text="my_rc_car/control" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="URL Camera (tuỳ chọn)"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginBottom="24dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etMqttCamera"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/rc_text_primary"
-                android:hint="http://192.168.x.x:81/stream" />
-        </com.google.android.material.textfield.TextInputLayout>
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnMqttSave"
             android:layout_width="match_parent"

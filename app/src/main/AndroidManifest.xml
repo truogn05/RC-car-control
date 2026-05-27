@@ -38,12 +38,6 @@
             android:exported="false"
             android:screenOrientation="sensorLandscape" />
 
-        <!-- Camera stream (Landscape) -->
-        <activity
-            android:name=".CameraActivity"
-            android:exported="false"
-            android:screenOrientation="sensorLandscape" />
-
     </application>
 
 </manifest>

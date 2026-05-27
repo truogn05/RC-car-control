@@ -46,7 +46,7 @@ class AddDeviceBottomSheet(
     }
 
     /** Called by WiFi page fragment when user taps Save */
-    fun saveWifiDevice(name: String, apSsid: String, apPassword: String, camera: String) {
+    fun saveWifiDevice(name: String, apSsid: String, apPassword: String) {
         if (name.isBlank() || apSsid.isBlank()) {
             Toast.makeText(requireContext(), "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show()
             return
@@ -57,7 +57,7 @@ class AddDeviceBottomSheet(
             connectionType = "wifi",
             apSsid = apSsid,
             apPassword = apPassword,
-            cameraUrl = camera
+            cameraUrl = ""
         )
         if (editDevice == null) repo.addDevice(device) else repo.updateDevice(device)
         onSaved(device)
@@ -65,7 +65,7 @@ class AddDeviceBottomSheet(
     }
 
     /** Called by MQTT page fragment when user taps Save */
-    fun saveMqttDevice(name: String, broker: String, topic: String, camera: String) {
+    fun saveMqttDevice(name: String, broker: String, topic: String) {
         if (name.isBlank() || broker.isBlank()) {
             Toast.makeText(requireContext(), "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show()
             return
@@ -76,7 +76,7 @@ class AddDeviceBottomSheet(
             connectionType = "mqtt",
             brokerUri = broker,
             mqttTopic = topic.ifBlank { "my_rc_car/control" },
-            cameraUrl = camera
+            cameraUrl = ""
         )
         if (editDevice == null) repo.addDevice(device) else repo.updateDevice(device)
         onSaved(device)
@@ -109,7 +109,6 @@ class AddWifiPageFragment(
         val etName   = view.findViewById<TextInputEditText>(R.id.etWifiName)
         val etSsid   = view.findViewById<TextInputEditText>(R.id.etWifiSsid)
         val etPwd    = view.findViewById<TextInputEditText>(R.id.etWifiPassword)
-        val etCamera = view.findViewById<TextInputEditText>(R.id.etWifiCamera)
         val btnSave  = view.findViewById<MaterialButton>(R.id.btnWifiSave)
 
         // Prefill when editing
@@ -117,15 +116,13 @@ class AddWifiPageFragment(
             etName.setText(it.name)
             etSsid.setText(it.apSsid)
             etPwd.setText(it.apPassword)
-            etCamera.setText(it.cameraUrl)
         }
 
         btnSave.setOnClickListener {
             sheet.saveWifiDevice(
                 name       = etName.text.toString(),
                 apSsid     = etSsid.text.toString(),
-                apPassword = etPwd.text.toString(),
-                camera     = etCamera.text.toString()
+                apPassword = etPwd.text.toString()
             )
         }
     }
@@ -149,22 +146,19 @@ class AddMqttPageFragment(
         val etName   = view.findViewById<TextInputEditText>(R.id.etMqttName)
         val etBroker = view.findViewById<TextInputEditText>(R.id.etMqttBroker)
         val etTopic  = view.findViewById<TextInputEditText>(R.id.etMqttTopic)
-        val etCamera = view.findViewById<TextInputEditText>(R.id.etMqttCamera)
         val btnSave  = view.findViewById<MaterialButton>(R.id.btnMqttSave)
 
         editDevice?.takeIf { it.connectionType == "mqtt" }?.let {
             etName.setText(it.name)
             etBroker.setText(it.brokerUri)
             etTopic.setText(it.mqttTopic)
-            etCamera.setText(it.cameraUrl)
         }
 
         btnSave.setOnClickListener {
             sheet.saveMqttDevice(
                 name   = etName.text.toString(),
                 broker = etBroker.text.toString(),
-                topic  = etTopic.text.toString(),
-                camera = etCamera.text.toString()
+                topic  = etTopic.text.toString()
             )
         }
     }

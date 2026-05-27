@@ -8,25 +8,7 @@
     android:clipChildren="false"
     android:clipToPadding="false">
 
-    <!-- Camera background (hidden by default) -->
-    <ImageView
-        android:id="@+id/ivCameraFeed"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
 
-    <!-- Semi-transparent overlay for readability when camera is on -->
-    <View
-        android:id="@+id/vCameraOverlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#80000000"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
 
     <!-- ==== TOP-LEFT STATUS PANEL ==== -->
     <LinearLayout
@@ -102,18 +84,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnCamera"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:text="📷"
-            android:textSize="18sp"
-            android:padding="0dp"
-            app:backgroundTint="@color/rc_bg_card_elevated"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            app:strokeColor="@color/rc_divider"
-            android:layout_marginEnd="4dp" />
-
-        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAuto"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -126,10 +96,34 @@
             android:layout_marginEnd="4dp" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLight"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="💡"
+            android:textSize="18sp"
+            android:padding="0dp"
+            app:backgroundTint="@color/rc_bg_card_elevated"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="@color/rc_divider"
+            android:layout_marginEnd="4dp" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnBuzzer"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:text="📢"
+            android:textSize="18sp"
+            android:padding="0dp"
+            app:backgroundTint="@color/rc_bg_card_elevated"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="@color/rc_divider"
+            android:layout_marginEnd="4dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnHazard"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="⚠️"
             android:textSize="18sp"
             android:padding="0dp"
             app:backgroundTint="@color/rc_bg_card_elevated"
@@ -304,23 +298,26 @@
     <!-- Speed limit slider (Joystick mode only - right side) -->
     <LinearLayout
         android:id="@+id/llSpeedLimitJoystick"
-        android:layout_width="48dp"
-        android:layout_height="170dp"
+        android:layout_width="100dp"
+        android:layout_height="190dp"
         android:gravity="center"
         android:layout_margin="12dp"
         android:visibility="gone"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <SeekBar
             android:id="@+id/sbSpeedLimit"
-            android:layout_width="160dp"
-            android:layout_height="32dp"
+            android:layout_width="180dp"
+            android:layout_height="48dp"
             android:max="100"
-            android:progress="100"
+            android:progress="0"
             android:rotation="270"
             android:splitTrack="false"
             android:progressDrawable="@drawable/bg_speed_limit_seekbar"
-            android:thumbTint="@color/rc_text_primary" />
+            android:thumb="@drawable/bg_seekbar_thumb"
+            android:thumbOffset="0dp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

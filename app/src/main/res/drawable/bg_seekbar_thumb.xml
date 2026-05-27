@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!-- Unrotated: vertical bar (width < height) -->
+    <!-- When rotated 270 deg (counter-clockwise), it becomes a horizontal lever (width > height) -->
+    <size 
+        android:width="15dp"
+        android:height="60dp" />
+    
+    <!-- Smooth glassmorphic gradient -->
+    <gradient
+        android:startColor="#FFFFFF"
+        android:endColor="#CFD8DC"
+        android:angle="90" />
+        
+    <corners android:radius="6dp" />
+    
+    <!-- Glowing cyan stroke matching the theme -->
+    <stroke
+        android:width="2dp"
+        android:color="@color/rc_accent_cyan" />
+</shape>

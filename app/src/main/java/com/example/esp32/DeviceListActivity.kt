@@ -82,6 +82,7 @@ class DeviceListActivity : AppCompatActivity() {
 
     private fun openController(device: Device) {
         val intent = Intent(this, MainActivity::class.java).apply {
+            putExtra("device_id", device.id)
             putExtra("connection_type", device.connectionType)
             putExtra("broker_uri", device.brokerUri)
             putExtra("mqtt_topic", device.mqttTopic)

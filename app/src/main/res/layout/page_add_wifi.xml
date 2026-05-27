@@ -77,21 +77,6 @@
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Camera URL (optional) -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="URL Camera (tuỳ chọn)"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginBottom="24dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etWifiCamera"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/rc_text_primary"
-                android:hint="http://192.168.4.1:81/stream" />
-        </com.google.android.material.textfield.TextInputLayout>
-
         <!-- Save button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnWifiSave"

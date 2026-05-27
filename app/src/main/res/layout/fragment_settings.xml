@@ -2,151 +2,219 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/bg_bottom_sheet_rounded"
-    android:paddingBottom="32dp">
+    android:background="@drawable/bg_bottom_sheet_rounded">
 
-    <!-- Handle -->
+    <!-- Scrollable Drag Handle -->
     <View
         android:layout_width="40dp"
         android:layout_height="4dp"
         android:background="@drawable/bg_sheet_handle"
         android:layout_gravity="center"
-        android:layout_marginTop="12dp" />
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="8dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cài Đặt"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="@color/rc_text_primary"
-        android:paddingStart="24dp"
-        android:paddingTop="16dp" />
-
-    <!-- Control Mode -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CHẾ ĐỘ ĐIỀU KHIỂN"
-        android:textSize="11sp"
-        android:textColor="@color/rc_text_secondary"
-        android:letterSpacing="0.1"
-        android:paddingStart="24dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="8dp" />
-
-    <LinearLayout
+    <!-- NestedScrollView to enable scrolling in Landscape mode -->
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:gravity="center_vertical">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Dùng Joystick"
-            android:textSize="15sp"
-            android:textColor="@color/rc_text_primary" />
+            android:orientation="vertical"
+            android:paddingBottom="24dp">
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/switchJoystick"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:thumbTint="@color/rc_accent_cyan"
-            app:trackTint="@color/rc_accent_cyan_dim" />
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cài Đặt"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/rc_text_primary"
+                android:paddingStart="24dp"
+                android:paddingTop="8dp" />
 
-    <View android:layout_width="match_parent" android:layout_height="1dp"
-        android:background="@color/rc_divider" android:layout_marginTop="12dp" android:layout_marginBottom="4dp" />
+            <!-- Control Mode -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CHẾ ĐỘ ĐIỀU KHIỂN"
+                android:textSize="11sp"
+                android:textColor="@color/rc_text_secondary"
+                android:letterSpacing="0.1"
+                android:paddingStart="24dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="4dp" />
 
-    <!-- Sound Settings -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ÂM THANH"
-        android:textSize="11sp"
-        android:textColor="@color/rc_text_secondary"
-        android:letterSpacing="0.1"
-        android:paddingStart="24dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="8dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:gravity="center_vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Dùng Joystick"
+                    android:textSize="14sp"
+                    android:textColor="@color/rc_text_primary" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Âm thanh nút bấm"
-            android:textSize="15sp"
-            android:textColor="@color/rc_text_primary" />
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchJoystick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:thumbTint="@color/rc_accent_cyan"
+                    app:trackTint="@color/rc_accent_cyan_dim" />
+            </LinearLayout>
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/switchSound"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            app:thumbTint="@color/rc_accent_cyan"
-            app:trackTint="@color/rc_accent_cyan_dim" />
-    </LinearLayout>
+            <View 
+                android:layout_width="match_parent" 
+                android:layout_height="1dp"
+                android:background="@color/rc_divider" 
+                android:layout_marginTop="8dp" 
+                android:layout_marginBottom="4dp" />
 
-    <View android:layout_width="match_parent" android:layout_height="1dp"
-        android:background="@color/rc_divider" android:layout_marginTop="12dp" android:layout_marginBottom="4dp" />
+            <!-- Sound Settings -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ÂM THANH"
+                android:textSize="11sp"
+                android:textColor="@color/rc_text_secondary"
+                android:letterSpacing="0.1"
+                android:paddingStart="24dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="4dp" />
 
-    <!-- Connection info -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="KẾT NỐI"
-        android:textSize="11sp"
-        android:textColor="@color/rc_text_secondary"
-        android:letterSpacing="0.1"
-        android:paddingStart="24dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="8dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/tvSettingsBroker"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="broker.hivemq.com"
-        android:textSize="13sp"
-        android:textColor="@color/rc_text_secondary"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:paddingBottom="4dp" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Tiếng động cơ &amp; Rung phản hồi"
+                    android:textSize="14sp"
+                    android:textColor="@color/rc_text_primary" />
 
-    <TextView
-        android:id="@+id/tvSettingsTopic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="my_rc_car/control"
-        android:textSize="13sp"
-        android:textColor="@color/rc_text_secondary"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp" />
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchSound"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    app:thumbTint="@color/rc_accent_cyan"
+                    app:trackTint="@color/rc_accent_cyan_dim" />
+            </LinearLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnSettingsBack"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:text="← Về Danh Sách Xe"
-        android:textColor="@color/rc_text_primary"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="20dp"
-        app:backgroundTint="@color/rc_bg_card_elevated"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        app:strokeColor="@color/rc_divider" />
+            <View 
+                android:layout_width="match_parent" 
+                android:layout_height="1dp"
+                android:background="@color/rc_divider" 
+                android:layout_marginTop="8dp" 
+                android:layout_marginBottom="4dp" />
+
+            <!-- Connection info -->
+            <TextView
+                android:id="@+id/tvSettingsConnHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CẤU HÌNH KẾT NỐI"
+                android:textSize="11sp"
+                android:textColor="@color/rc_text_secondary"
+                android:letterSpacing="0.1"
+                android:paddingStart="24dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilBroker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="10dp"
+                android:hint="MQTT Broker (tcp://...)"
+                app:hintTextColor="@color/rc_accent_cyan"
+                app:boxStrokeColor="@color/rc_accent_cyan"
+                app:boxStrokeWidth="1dp"
+                app:boxBackgroundColor="@color/rc_bg_card"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSettingsBroker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/rc_text_primary"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilTopic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="14dp"
+                android:hint="MQTT Control Topic"
+                app:hintTextColor="@color/rc_accent_cyan"
+                app:boxStrokeColor="@color/rc_accent_cyan"
+                app:boxStrokeWidth="1dp"
+                app:boxBackgroundColor="@color/rc_bg_card"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSettingsTopic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/rc_text_primary"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSaveConfig"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Cập Nhật Kết Nối"
+                android:textColor="@color/rc_bg_deep"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="4dp"
+                app:backgroundTint="@color/rc_accent_cyan"
+                app:cornerRadius="12dp"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSettingsBack"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="← Về Danh Sách Xe"
+                android:textColor="@color/rc_text_primary"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="8dp"
+                app:backgroundTint="@color/rc_bg_card_elevated"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:strokeColor="@color/rc_divider" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>
